@@ -2,21 +2,26 @@ import requests
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from datetime import datetime, timedelta
+import os
+from dotenv import load_dotenv
 
+# 🔹 Flask + CORS
 app = Flask(__name__)
 CORS(app)
 
-# 🔹 Настройки VK API
-VK_ACCESS_TOKEN = ""  # Токен группы
-VK_PEER_ID = 1  # ID пользователя или беседы (если беседа: 2000000000 + ID беседы)
+# 🔹 Загружаем переменные из .env
+load_dotenv()
+
+# 🔹 Получаем переменные окружения
+VK_ACCESS_TOKEN = os.getenv("VK_API_TOKEN")
+VK_PEER_ID = int(os.getenv("VK_PEER_ID", "1"))  # безопасно приводим к int
 VK_API_VERSION = "5.131"
 
-
+# 🔹 Функция отправки сообщения в VK
 def send_vk_message(name, phone, shift, email):
-    """Функция отправки сообщения в ВК от имени группы"""
     try:
-        message = f"📩 Новая заявка:\n👤 Имя: {name}\n📞 Телефон: {phone}\n📧 Email: {email}"  # Убрал смену из сообщения по умолчанию
-        if shift:  # Добавил смену только если она указана
+        message = f"📩 Новая заявка:\n👤 Имя: {name}\n📞 Телефон: {phone}\n📧 Email: {email}"
+        if shift:
             message += f"\n📅 Смена: {shift}"
 
         url = "https://api.vk.com/method/messages.send"
@@ -58,61 +63,42 @@ def home():
 
 @app.route("/submit_form", methods=["POST"])
 def submit_form():
-    """Обработчик формы"""
     try:
         data = request.get_json()
-
         if not data:
             return jsonify({"message": "Данные не получены"}), 400
 
         name = data.get("name")
         phone = data.get("phone")
-        shift = data.get("shift", "")  # Получаем shift, если он есть, иначе пустая строка
-        email = data.get("email")  # Получаем значение email
+        shift = data.get("shift", "")
+        email = data.get("email")
 
-        if not name or not phone or not email:  # Убрал проверку на shift, оставил только имя, телефон и email
+        if not name or not phone or not email:
             return jsonify({"message": "Заполните все поля: имя, телефон и email"}), 400
 
         print(f"📩 Получена заявка: Имя: {name}, Телефон: {phone}, Email: {email}, Смена: {shift}")
 
-        # 🔹 Отправка в ВК
         vk_sent = send_vk_message(name, phone, shift, email)
 
         if vk_sent:
-            if shift:  # Изменяем сообщение об успехе в зависимости от наличия смены
-                return jsonify({"message": "Форма успешно отправлена, данные и информация о смене отправлены в ВКонтакте!"}), 200
-            else:
-                 return jsonify({"message": "Форма успешно отправлена, данные отправлены в ВКонтакте!"}), 200
+            return jsonify({
+                "message": "Форма успешно отправлена, данные отправлены в ВКонтакте!" if not shift
+                else "Форма успешно отправлена, данные и информация о смене отправлены в ВКонтакте!"
+            }), 200
         else:
             return jsonify({"message": "Ошибка при отправке данных в ВКонтакте!"}), 500
-
-
 
     except Exception as e:
         print(f"❌ Ошибка: {e}")
         return jsonify({"message": "Ошибка при обработке запроса"}), 500
 
 
-
 @app.route("/submit_quiz", methods=["POST"])
 def submit_quiz():
-    """Обработка результатов опроса и отправка их в ВКонтакте"""
     try:
         data = request.get_json()
-
         if not data:
             return jsonify({"message": "Нет данных"}), 400
-
-        # Ожидаем данные в формате:
-        # {
-        #   "name": "Имя",
-        #   "phone": "Телефон",
-        #   "email": "Email",
-        #   "answers": [
-        #       {"question": "...", "answer": "..."},
-        #       ...
-        #   ]
-        # }
 
         name = data.get("name")
         phone = data.get("phone")
@@ -129,7 +115,6 @@ def submit_quiz():
             if question and answer:
                 message += f"\n• {question}: {answer}"
 
-        # Отправка в ВК
         url = "https://api.vk.com/method/messages.send"
         payload = {
             "peer_id": VK_PEER_ID,
@@ -153,7 +138,9 @@ def submit_quiz():
         print(f"❌ Ошибка обработки опроса: {e}")
         return jsonify({"message": "Ошибка сервера при отправке опроса"}), 500
 
-start_time = datetime.now()  # можно заменить на datetime.now() при первом запуске
+
+# 🔹 Таймер обратного отсчёта
+start_time = datetime.now()
 duration = timedelta(hours=24)
 
 @app.route('/countdown')
