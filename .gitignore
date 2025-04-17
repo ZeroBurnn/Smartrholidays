@@ -3,18 +3,18 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-*.env
-.env
 .venv/
 venv/
+
+# Flask instance folder and env file
 instance/
-*.sqlite3
+.env
 
-# VS Code
+# VS Code settings
 .vscode/
-
-# macOS
-.DS_Store
 
 # Logs
 *.log
+
+# macOS
+.DS_Store
