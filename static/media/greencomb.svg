@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<svg width="346.83209228515625" height="387.266845703125" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <g class="layer">
+  <title>Layer 1</title>
+  <path d="m163.64,0.32c96.46,-5.53 108.78,60.56 144.97,166.93c36.19,106.37 69.78,127.79 -14.36,199.4c-84.15,71.61 -306.05,-59.64 -293.76,-144.76c12.29,-85.11 66.69,-216.04 163.15,-221.57z" fill="#F0E3CA" fill-opacity="0.72" id="svg_1"/>
+  <use id="svg_4" transform="matrix(1.01107 0 0 1.15545 2.12599 -16.2793)" x="-2.97" xlink:href="#svg_3" y="0.84"/>
+ </g>
+ <defs>
+  <symbol data-guides="{&quot;vertical&quot;:[],&quot;horizontal&quot;:[]}" id="svg_3" viewBox="5846.000467936198 4745 403.86846923828125 342.2308654785156" xmlns="http://www.w3.org/2000/svg">
+   <path d="m5863.47,4800.31c52.8,-84.45 115.74,-55.45 226.78,-22.53c111.04,32.91 149.07,17.41 159.2,130.85c10.13,113.44 -232.46,221.95 -296.75,160.91c-64.29,-61.04 -142.03,-184.78 -89.23,-269.23z" fill="#33cc66" id="svg_2"/>
+
+  </symbol>
+ </defs>
+</svg>
