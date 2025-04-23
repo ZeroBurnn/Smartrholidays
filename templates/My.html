@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Личный кабинет</title>
-    <link rel="stylesheet" href="styles/MyStyle.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mystyle.css') }}">
 </head>
 <body>
     <div class="dashboard-container">
@@ -18,10 +18,12 @@
                 <button class="menu-btn" data-category="sql">SQL</button>
             </div>
             <div class="profile-header">
-                <img src="profile-icon.png" alt="Профиль" class="profile-icon">
-                <span class="username">Имя пользователя</span>
-                <a href="edit-profile.html" class="edit-profile-btn">Редактировать профиль</a>
+    <img src="{{ url_for('static', filename='img/profile-icon.png') }}" alt="Профиль" class="profile-icon">
+    <span class="username">Имя пользователя</span>
+    <a href="edit-profile.html" class="edit-profile-btn">Редактировать профиль</a>
+    <a href="{{ url_for('logout') }}" class="logout-btn">Выйти</a>
             </div>
+
         </header>
 
         <!-- Основное содержимое -->
@@ -38,6 +40,6 @@
             </section>
         </main>
     </div>
-    <script src="js/MyJS.js"></script>
+    <script src="{{ url_for('static', filename='js/myjs.js') }}"></script>
 </body>
 </html>

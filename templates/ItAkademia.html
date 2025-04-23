@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Шапка сайта</title>
-    <link rel="stylesheet" href="styles/ITAkademiaStyle.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ITAkademiaStyle.css') }}">
 </head>
 <body>
     <header>
@@ -12,19 +12,19 @@
             <div class="left-side">
                 <div class="title">АНО ДПО "Академия цифровых технологий"</div>
                 <div class="social-icons">
-                    <a href="#" class="social-icon"><img src="media/tg-icon.svg" alt="Telegram"></a>
-                    <a href="#" class="social-icon"><img src="media/vk-icon.svg" alt="VK"></a>
+                    <a href="#" class="social-icon"><img src="{{url_for('static', filename='media/tg-icon.svg')}}" alt="Telegram"></a>
+                    <a href="#" class="social-icon"><img src="{{url_for('static', filename='media/vk-icon.svg')}}" alt="VK"></a>
                 </div>
             </div>
             <div class="center-logo">
-                <img src="media/logo-icon.png" alt="Логотип">
+                <img src="{{url_for('static', filename='media/logo-icon.png')}}" alt="Логотип">
             </div>
             <div class="right-side">
                 <div class="contact-info">
                     <div class="phone">+7 (912) 22 42 120</div>
                     <div class="email">it-akademy@mail.ru</div>
                 </div>
-                <a href="#" class="login-button">Личный кабинет</a>
+                <a href="{{url_for('login')}}" class="login-button">Личный кабинет</a>
             </div>
         </div>
 
@@ -72,125 +72,123 @@
                 <p>Новое поколение – современное обучение.</p>
             </div>
             <div class="image-container">
-                <img src="media/code.png" alt="Дети за ноутбуками">
+                <img src="{{url_for('static', filename='media/code.png')}}" alt="Дети за ноутбуками">
                 <div class="overlay"></div>
             </div>
         </section>
         
         <div class="course-form">
-            <h2>Подберем нужный курс</h2>
-            <form action="#" method="post">
-                <input type="email" name="email" placeholder="Ваша почта" required>
-                <input type="text" name="name" placeholder="Ваше имя" required>
-                <div class="select-group">
-                    <label for="direction">Направление</label>
-                    <select name="direction" id="direction">
-                        <option value="design">Дизайн</option>
-                        <option value="develop">Разработка</option>
-                        <option value="analytics">Аналитика</option>
-                        <option value="testing">Тестирование</option>
-                    </select>
-                </div>
-                <button type="submit" class="submit-btn">Отправить</button>
-            </form>
+    <h2>Подберем нужный курс</h2>
+    <form action="/course_request" method="post">
+        <input type="email" name="email" placeholder="Ваша почта" required>
+        <input type="text" name="name" placeholder="Ваше имя" required>
+        <input type="tel" name="phone" placeholder="Ваш телефон" required>
+        <div class="select-group">
+            <label for="direction">Направление</label>
+            <select name="direction" id="direction">
+                <option value="design">Дизайн</option>
+                <option value="develop">Разработка</option>
+                <option value="analytics">Аналитика</option>
+                <option value="testing">Тестирование</option>
+            </select>
         </div>
+        <button type="submit" class="submit-btn">Отправить</button>
+    </form>
+</div>
 
         <section class="faculty">
-            <h2>Наши факультеты</h2>
-            <div class="grid">
-                <div class="block">
-                    <img src="media/orangecomb.svg">
-                    <p>Инженерия и программирование</p>
-                </div>
-                <div class="block">
-                    <img src="media/orangecomb.svg">
-                    <p>Робототехника и современные технологии</p>
-                </div>
-                <div class="block">
-                    <img src="media/orangecomb.svg">
-                    <p>3D моделирование</p>
-                </div>
-                <div class="block">
-                    <img src="media/orangecomb.svg">
-                    <p>Психология</p>
-                </div>
-                <div class="block">
-                    <img src="media/orangecomb.svg">
-                    <p>Юриспруденция и право</p>
-                </div>
-                <div class="block">
-                    <img src="media/orangecomb.svg">
-                    <p>Дошкольное, начальное и специальное образование</p>
-                </div>
+    <h2>Наши факультеты</h2>
+    <div class="grid">
+        <div class="block">
+            <img src="{{url_for('static', filename='media/orangecomb.svg')}}" alt="Иконка">
+            <p>Инженерия и программирование</p>
+        </div>
+        <div class="block">
+            <img src="{{url_for('static', filename='media/orangecomb.svg')}}" alt="Иконка">
+            <p>Робототехника и современные технологии</p>
+        </div>
+        <div class="block">
+            <img src="{{url_for('static', filename='media/orangecomb.svg')}}" alt="Иконка">
+            <p>3D моделирование</p>
+        </div>
+        <div class="block">
+            <img src="{{url_for('static', filename='media/orangecomb.svg')}}" alt="Иконка">
+            <p>Психология</p>
+        </div>
+        <div class="block">
+            <img src="{{url_for('static', filename='media/orangecomb.svg')}}" alt="Иконка">
+            <p>Юриспруденция и право</p>
+        </div>
+        <div class="block">
+            <img src="{{url_for('static', filename='media/orangecomb.svg')}}" alt="Иконка">
+            <p>Дошкольное, начальное и специальное образование</p>
+        </div>
+    </div>
+</section>
+<section class="courses">
+    <h2>Наши Курсы</h2>
+    <div class="grid">
+        <div class="block">
+            <img src="{{url_for('static', filename='media/bluecomb.svg')}}" alt="Иконка">
+            <p>Повышение квалификации</p>
+        </div>
+        <div class="block">
+            <img src="{{url_for('static', filename='media/bluecomb.svg')}}" alt="Иконка">
+            <p>Профпереподготовка</p>
+        </div>
+    </div>
+</section>
+<section class="services">
+    <h2>Наши Услуги</h2>
+    <div class="grid">
+        <div class="block">
+            <img src="{{url_for('static', filename='media/greencomb.svg')}}" alt="Иконка">
+            <p>Разработка программного обеспечения</p>
+        </div>
+        <div class="block">
+            <img src="{{url_for('static', filename='media/greencomb.svg')}}" alt="Иконка">
+            <p>Организация олимпиад и конкурсов</p>
+        </div>
+        <div class="block">
+            <img src="{{url_for('static', filename='media/greencomb.svg')}}" alt="Иконка">
+            <p>Разработка методических материалов</p>
+        </div>
+        <div class="block">
+            <img src="{{url_for('static', filename='media/greencomb.svg')}}" alt="Иконка">
+            <p>Web-разработка</p>
+        </div>
+    </div>
+</section>
+
+        <section class="info-box">
+            <div class="info-item">
+                <h3>Для родителей:</h3>
+                <p>Полезные ресурсы и курсы для поддержки обучения ваших детей.</p>
+                <a href="#">Узнать больше</a>
             </div>
-        </section>
-        
-        <section class="courses">
-            <h2>Наши Курсы</h2>
-            <div class="grid">
-                <div class="block">
-                    <img src="media/bluecomb.svg">
-                    <p>Повышение квалификации</p>
-                </div>
-                <div class="block">
-                    <img src="media/bluecomb.svg">
-                    <p>Профпереподготовка</p>
-                </div>
+            <div class="divider"></div>
+            <div class="info-item">
+                <h3>Для учителей:</h3>
+                <p>Инструменты и методики для улучшения образовательного процесса.</p>
+                <a href="#">Узнать больше</a>
             </div>
-        </section>
-        
-        <section class="services">
-            <h2>Наши Услуги</h2>
-            <div class="grid">
-                <div class="block">
-                    <img src="media/greencomb.svg">
-                    <p>Разработка программного обеспечения</p>
-                </div>
-                <div class="block">
-                    <img src="media/greencomb.svg">
-                    <p>Организация олимпиад и конкурсов</p>
-                </div>
-                <div class="block">
-                    <img src="media/greencomb.svg">
-                    <p>Разработка методических материалов</p>
-                </div>
-                <div class="block">
-                    <img src="media/greencomb.svg">
-                    <p>Web-разработка</p>
-                </div>
+            <div class="divider"></div>
+            <div class="info-item">
+                <h3>Для организаций:</h3>
+                <p>Программы сотрудничества и корпоративное обучение.</p>
+                <a href="#">Узнать больше</a>
             </div>
-            <section class="info-box">
-                <div class="info-item">
-                    <h3>Для родителей:</h3>
-                    <p>Полезные ресурсы и курсы для поддержки обучения ваших детей.</p>
-                    <a href="#">Узнать больше</a>
-                </div>
-                <div class="divider"></div>
-                <div class="info-item">
-                    <h3>Для учителей:</h3>
-                    <p>Инструменты и методики для улучшения образовательного процесса.</p>
-                    <a href="#">Узнать больше</a>
-                </div>
-                <div class="divider"></div>
-                <div class="info-item">
-                    <h3>Для организаций:</h3>
-                    <p>Программы сотрудничества и корпоративное обучение.</p>
-                    <a href="#">Узнать больше</a>
-                </div>
-            </section>
-            
-        
-        
+        </section> <!-- Закрытие секции info-box -->
     </main>
 
     <footer>
         <div class="container">
             <div class="logo-column">
-                <img src="media/logo-icon.png" alt="Логотип Академии">
-                <a href="#" class="vk-link"><img src="media/vk-icon.svg" alt="VK"></a>
+                <img src="{{url_for('static', filename='media/logo-icon.png')}}" alt="Логотип Академии">
+                <a href="#" class="vk-link"><img src="{{url_for('static', filename='media/vk-icon.svg')}}" alt="VK"></a>
                 <p class="copyright">&copy; 2023</p>
             </div>
-    
+
             <div class="info-column">
                 <h4>АНО ДПО "АКАДЕМИЯ ИНФОРМАЦИОННО-ЦИФРОВЫХ ТЕХНОЛОГИЙ"</h4>
                 <p>Адрес: г. Заречный, ул. Кузнецова, 17</p>
@@ -200,13 +198,13 @@
                 <p>Договор оферты</p>
                 <p>2023 г. – Академия технологий</p>
             </div>
-    
+
             <div class="training-column">
                 <h4>ОБУЧЕНИЕ</h4>
                 <p>Контакты</p>
                 <p>Бесплатные материалы</p>
             </div>
-    
+
             <div class="services-column">
                 <h4>УСЛУГИ</h4>
                 <p>Родителю</p>

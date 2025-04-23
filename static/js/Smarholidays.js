@@ -11,23 +11,23 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  const onlineBtn = document.querySelector(".online-btn");
-  const offlineBtn = document.querySelector(".offline-btn");
-  const onlinePricingSection = document.getElementById("pricing-section");
-  const offlinePricingSection = document.getElementById("offline-pricing-section");
+    const onlineBtn = document.querySelector(".online-btn");
+    const offlineBtn = document.querySelector(".offline-btn");
+    const onlinePricingSection = document.getElementById("pricing-section");
+    const offlinePricingSection = document.getElementById("offline-pricing-section");
 
-  function showSection(sectionToShow, sectionToHide) {
-      sectionToShow.style.display = "block";
-      sectionToHide.style.display = "none";
-  }
+    function showSection(sectionToShow, sectionToHide) {
+        sectionToShow.style.display = "block";
+        sectionToHide.style.display = "none";
+    }
 
-  onlineBtn.addEventListener("click", function () {
-      showSection(onlinePricingSection, offlinePricingSection);
-  });
+    onlineBtn.addEventListener("click", function () {
+        showSection(onlinePricingSection, offlinePricingSection);
+    });
 
-  offlineBtn.addEventListener("click", function () {
-      showSection(offlinePricingSection, onlinePricingSection);
-  });
+    offlineBtn.addEventListener("click", function () {
+        showSection(offlinePricingSection, onlinePricingSection);
+    });
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -38,11 +38,13 @@ document.addEventListener("DOMContentLoaded", function () {
     signupButton.addEventListener("click", function () {
         const nameInput = document.getElementById("name");
         const phoneInput = document.getElementById("phone");
+        const emailInput = document.getElementById("email");
 
         const name = nameInput.value.trim();
         const phone = phoneInput.value.trim();
+        const email = emailInput.value.trim();
 
-        if (!name || !phone) {
+        if (!name || !phone || !email) {
             if (messageDiv) {
                 messageDiv.textContent = "Пожалуйста, заполните все поля!";
                 messageDiv.style.color = "red";
@@ -50,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        const formData = { name, phone };
+        const formData = { name, phone, email };
 
         fetch("/submit_form", {
             method: "POST",
@@ -61,25 +63,35 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!response.ok) {
                 throw new Error(`HTTP ошибка! Статус: ${response.status}`);
             }
-            return response.json();
+            return response.text();
         })
-        .then(data => {
-            if (messageDiv) {
-                messageDiv.textContent = data.message;
-                messageDiv.style.color = "green";
-            }
-            nameInput.value = "";
-            phoneInput.value = "";
+        .then(text => {
+            try {
+                const data = JSON.parse(text);
+                if (messageDiv) {
+                    messageDiv.textContent = data.message;
+                    messageDiv.style.color = "green";
+                }
+                nameInput.value = "";
+                phoneInput.value = "";
+                emailInput.value = "";
 
-            fetch("/get_data")
-                .then(response => response.json())
-                .then(displayData)
-                .catch(error => {
-                    console.error("Ошибка получения данных:", error);
-                    if (dataDisplayDiv) {
-                        dataDisplayDiv.textContent = "Ошибка при получении данных.";
-                    }
-                });
+                fetch("/get_data")
+                    .then(response => response.json())
+                    .then(displayData)
+                    .catch(error => {
+                        console.error("Ошибка получения данных:", error);
+                        if (dataDisplayDiv) {
+                            dataDisplayDiv.textContent = "Ошибка при получении данных.";
+                        }
+                    });
+            } catch (e) {
+                console.error("Не удалось распарсить JSON:", e);
+                if (messageDiv) {
+                    messageDiv.textContent = "Ошибка при обработке ответа сервера.";
+                    messageDiv.style.color = "red";
+                }
+            }
         })
         .catch(error => {
             console.error("Ошибка отправки:", error);
@@ -114,34 +126,28 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeModalBtn = document.getElementById("closeModal");
     const signupButtons = document.querySelectorAll(".signup-btn");
     const submitFormBtn = document.getElementById("submitForm");
-    const mainSignupButton = document.querySelector(".signup-button"); // Кнопка в основной форме
+    const mainSignupButton = document.querySelector(".signup-button");
 
+    let selectedShift = "";
 
-    let selectedShift = ""; // Переменная для хранения выбранной смены
-
-    // Открытие модального окна
     signupButtons.forEach(button => {
         button.addEventListener("click", function () {
-            // Получаем название смены из карточки смены
             selectedShift = this.closest(".shift-card").querySelector(".shift-header h2").innerText;
             document.getElementById("selectedShift").innerText = `Вы записываетесь на: ${selectedShift}`;
             modal.style.display = "flex";
         });
     });
 
-    // Закрытие модального окна
     closeModalBtn.addEventListener("click", function () {
         modal.style.display = "none";
     });
 
-    // Закрытие при клике вне модального окна
     window.addEventListener("click", function (event) {
         if (event.target === modal) {
             modal.style.display = "none";
         }
     });
 
-    // Отправка данных на сервер Flask (из модального окна)
     submitFormBtn.addEventListener("click", function () {
         const userName = document.getElementById("userName").value.trim();
         const userPhone = document.getElementById("userPhone").value.trim();
@@ -152,7 +158,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Отправляем данные, включая выбранную смену и email
         fetch("/submit_form", {
             method: "POST",
             headers: {
@@ -160,14 +165,25 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             body: JSON.stringify({ name: userName, phone: userPhone, shift: selectedShift, email: userEmail })
         })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message);
-            if (data.message.includes("успешно")) {
-                modal.style.display = "none";
-                document.getElementById("userName").value = "";
-                document.getElementById("userPhone").value = "";
-                document.getElementById("userEmail").value = "";
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP ошибка! Статус: ${response.status}`);
+            }
+            return response.text();
+        })
+        .then(text => {
+            try {
+                const data = JSON.parse(text);
+                alert(data.message);
+                if (data.message.includes("успешно")) {
+                    modal.style.display = "none";
+                    document.getElementById("userName").value = "";
+                    document.getElementById("userPhone").value = "";
+                    document.getElementById("userEmail").value = "";
+                }
+            } catch (e) {
+                console.error("Не удалось распарсить JSON:", e);
+                alert("Ошибка при обработке ответа сервера.");
             }
         })
         .catch(error => {
@@ -176,8 +192,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-
-    // Код для основной формы
     if (mainSignupButton) {
         mainSignupButton.addEventListener("click", function () {
             const nameInput = document.getElementById("name");
@@ -197,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 name: name,
                 phone: phone,
                 email: email,
-                shift: "" // Добавляем shift со значением ""
+                shift: ""
             };
 
             fetch("/submit_form", {
@@ -207,13 +221,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
                 body: JSON.stringify(formData)
             })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-                if (data.message.includes("успешно")) {
-                    nameInput.value = "";
-                    phoneInput.value = "";
-                    emailInput.value = "";
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP ошибка! Статус: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(text => {
+                try {
+                    const data = JSON.parse(text);
+                    alert(data.message);
+                    if (data.message.includes("успешно")) {
+                        nameInput.value = "";
+                        phoneInput.value = "";
+                        emailInput.value = "";
+                    }
+                } catch (e) {
+                    console.error("Не удалось распарсить JSON:", e);
+                    alert("Ошибка при обработке ответа сервера.");
                 }
             })
             .catch(error => {
@@ -223,4 +248,3 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
-

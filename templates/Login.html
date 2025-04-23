@@ -4,20 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход</title>
-    <link rel="stylesheet" href="styles/LoginStyle.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loginstyle.css') }}">
 </head>
 <body>
     <div class="form-container">
         <h2>Вход</h2>
-        <form action="#">
-            <input type="email" placeholder="Введите Email" required>
-            <input type="password" placeholder="Введите пароль" required>
-            <button type="submit">Войти</button>
-        </form>
+        <form action="{{ url_for('login') }}" method="post">
+    <input type="email" name="email" placeholder="Введите Email" required>
+    <input type="password" name="password" placeholder="Введите пароль" required>
+    <button type="submit">Войти</button>
+</form>
+
         <div class="links">
-            <a href="Forgetpassword.html">Забыли пароль?</a>
-            <a href="Regstration.html">Регистрация</a>
-        </div>
+
+    <a href="{{ url_for('register') }}">Регистрация</a>
+</div>
     </div>
 </body>
 </html>
