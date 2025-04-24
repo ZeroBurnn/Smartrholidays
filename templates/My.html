@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mystyle.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Верхняя панель -->
+        <header class="top-bar">
+            <div class="category-buttons">
+                <button class="menu-btn" data-category="Шахматы">Шахматы</button>
+                <button class="menu-btn" data-category="css">CSS</button>
+                <button class="menu-btn" data-category="js">JavaScript</button>
+                <button class="menu-btn" data-category="python">Python</button>
+                <button class="menu-btn" data-category="sql">SQL</button>
+            </div>
+            <div class="profile-header">
+    <img src="{{ url_for('static', filename='img/profile-icon.png') }}" alt="Профиль" class="profile-icon">
+    <span class="username">Имя пользователя</span>
+    <a href="edit-profile.html" class="edit-profile-btn">Редактировать профиль</a>
+    <a href="{{ url_for('logout') }}" class="logout-btn">Выйти</a>
+            </div>
+
+        </header>
+
+        <!-- Основное содержимое -->
+        <main class="content">
+            <!-- Левая панель с уроками -->
+            <aside class="sidebar">
+                <div id="course-buttons"></div>
+                <div class="lessons-list"></div>
+            </aside>
+
+            <!-- Правая панель с контентом урока -->
+            <section id="lesson-content" class="lesson-content">
+                <h2>Выберите урок</h2>
+            </section>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/myjs.js') }}"></script>
+</body>
+</html>
