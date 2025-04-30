@@ -1,0 +1,443 @@
+/* Общие стили */
+body {
+    font-family: sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: url("../media/futurebg1.jpg") no-repeat center center fixed;
+    background-size: cover; /* Фон растягивается на весь экран */
+}
+
+/* Полупрозрачный слой поверх фона */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.6); /* Полупрозрачный белый */
+    z-index: -1; /* За фоном */
+}
+
+/* Контейнер для анкеты */
+.container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 900px; /* Увеличенная ширина */
+    padding: 30px; /* Отступы внутри контейнера */
+    height: auto; /* Автоматическая высота */
+    max-height: 80vh; /* Ограничение по высоте */
+    overflow-y: auto; /* Прокрутка при необходимости */
+}
+
+/* Блок с вопросами */
+.quiz-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+/* Стиль текста вопроса */
+.quiz-question {
+    font-size: 1.3rem; /* Размер шрифта */
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Блок с вариантами ответов */
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+}
+
+/* Стиль меток для вариантов ответов */
+.quiz-options label {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 8px 16px; /* Отступы */
+    margin-bottom: 8px;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+}
+
+/* Наведение на метку */
+.quiz-options label:hover {
+    background-color: #eee;
+}
+
+/* Скрытие стандартного радиокнопки */
+.quiz-options input[type="radio"] {
+    display: none;
+}
+
+/* Выделение выбранного ответа */
+.quiz-options label.selected {
+    background-color: #d0f0ff;
+    border-color: #4dd0e1;
+    color: #0277bd;
+    transform: scale(1.02);
+    font-weight: bold;
+}
+
+/* Блок с кнопками навигации */
+.quiz-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+/* Стиль кнопок "Назад" и "Далее" */
+.quiz-navigation button {
+    background-color: #03a9f4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px; /* Отступы */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.95rem;
+}
+
+/* Отключенная кнопка */
+.quiz-navigation button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+/* Наведение на активную кнопку */
+.quiz-navigation button:hover:not(:disabled) {
+    background-color: #0277bd;
+}
+
+/* Индикатор прогресса */
+.quiz-progress {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+}
+
+/* Блок с бонусным предложением */
+.quiz-bonus {
+    background-color: #e0f7fa;
+    border: 1px solid #b2ebf2;
+    border-radius: 5px;
+    padding: 12px;
+    text-align: center;
+    color: #006064;
+    font-size: 0.95rem;
+}
+
+/* Блок с результатами */
+#resultsContainer {
+    margin-top: 20px;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+#resultsContainer h2 {
+    margin-bottom: 15px;
+    font-size: 1.5rem; /* Размер заголовка */
+}
+
+#resultsContainer p {
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.modal-content button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #4CAF50;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.checkmark-circle {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    display: inline-block;
+}
+
+.checkmark-circle .background {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #4CAF50;
+    position: absolute;
+}
+
+.checkmark {
+    position: absolute;
+    left: 20px;
+    top: 38px;
+    width: 22px;
+    height: 4px;
+    background-color: white;
+    transform: rotate(45deg);
+    transform-origin: left top;
+    animation: drawCheck 0.5s ease forwards;
+}
+
+.checkmark::after {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 10px;
+    width: 4px;
+    height: 20px;
+    background-color: white;
+    transform: rotate(90deg);
+    transform-origin: left top;
+}
+
+@keyframes drawCheck {
+    0% { width: 0; }
+    100% { width: 22px; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Стили для выбора курсов */
+.course-section,
+.free-courses-section {
+    margin-bottom: 20px;
+}
+
+.course-level,
+.free-courses-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.course-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.course-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #555;
+}
+
+/* Стилизация радиокнопок и флажков */
+input[type="radio"],
+input[type="checkbox"] {
+    appearance: none; /* Убираем стандартный вид */
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 50%; /* Для радиокнопок */
+    cursor: pointer;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+input[type="checkbox"] {
+    border-radius: 4px; /* Для флажков */
+}
+
+input[type="radio"]:checked,
+input[type="checkbox"]:checked {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+input[type="radio"]:checked::after {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    margin: 5px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+input[type="checkbox"]:checked::after {
+    content: '✔';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: white;
+}
+
+/* Стилизация текста рядом с кнопками */
+label {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+label:hover {
+    color: #4CAF50;
+}
+
+/* Стили для формы последнего вопроса */
+#lastQuestionForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Отступы между элементами */
+}
+
+/* Стили для меток */
+#lastQuestionForm label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px; /* Отступ снизу */
+}
+
+/* Стили для текстовых полей */
+#lastQuestionForm input[type="text"],
+#lastQuestionForm input[type="tel"],
+#lastQuestionForm input[type="email"] {
+  width: 100%; /* Занимает всю доступную ширину */
+  padding: 12px; /* Внутренние отступы */
+  font-size: 16px; /* Размер шрифта */
+  border: 2px solid #ccc; /* Граница */
+  border-radius: 8px; /* Скругленные углы */
+  background-color: #fff; /* Белый фон */
+  color: #333; /* Цвет текста */
+  transition: border-color 0.3s ease; /* Плавное изменение границы */
+}
+
+/* Фокус на текстовых полях */
+#lastQuestionForm input[type="text"]:focus,
+#lastQuestionForm input[type="tel"]:focus,
+#lastQuestionForm input[type="email"]:focus {
+  border-color: #4CAF50; /* Цвет границы при фокусе */
+  outline: none; /* Убираем стандартный контур */
+}
+
+/* Стили для выпадающего списка */
+#lastQuestionForm select[name="course"] {
+  width: 100%; /* Занимает всю доступную ширину */
+  padding: 12px; /* Внутренние отступы */
+  font-size: 16px; /* Размер шрифта */
+  border: 2px solid #ccc; /* Граница */
+  border-radius: 8px; /* Скругленные углы */
+  background-color: #fff; /* Белый фон */
+  color: #333; /* Цвет текста */
+  appearance: none; /* Убираем стандартный вид стрелки */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='%23333' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); /* Кастомная стрелка */
+  background-repeat: no-repeat;
+  background-position: right 12px center; /* Позиция стрелки */
+  cursor: pointer; /* Изменение курсора при наведении */
+  transition: border-color 0.3s ease; /* Плавное изменение границы */
+}
+
+#lastQuestionForm select[name="course"]:focus {
+  border-color: #4CAF50; /* Цвет границы при фокусе */
+}
+
+/* Стили для чекбоксов */
+#lastQuestionForm input[type="checkbox"] {
+  appearance: none; /* Убираем стандартный вид */
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px; /* Прямоугольные углы */
+  cursor: pointer;
+  margin-right: 10px;
+  transition: all 0.3s ease;
+}
+
+#lastQuestionForm input[type="checkbox"]:checked {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+}
+
+#lastQuestionForm input[type="checkbox"]:checked::after {
+  content: '✔';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: white;
+}
+
+/* Стили для текста рядом с чекбоксами */
+#lastQuestionForm label {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Расстояние между чекбоксом и текстом */
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+#lastQuestionForm label:hover {
+  color: #4CAF50;
+}
+
+/* Стили для кнопки "Забронировать место" */
+button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button:not([disabled]) {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:not([disabled]):hover {
+  background-color: #45a049;
+}

@@ -1,0 +1,426 @@
+/* Общие стили */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: url("../media/futurebg1.jpg") no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+  z-index: 0;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.6); /* Полупрозрачный белый */
+  z-index: -1; /* За фоном */
+}
+
+/* Контейнер для левой и правой частей */
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch; /* Растягиваем элементы по высоте */
+  padding: 34px;
+  gap: 34px;
+  min-height: 100vh; /* Минимальная высота контейнера — весь экран */
+}
+
+
+/* Левая часть */
+.left-section {
+  position: fixed; /* Фиксированное позиционирование */
+  top: 20px; /* Отступ от верхнего края */
+  bottom: 20px; /* Отступ от нижнего края */
+  left: 20px; /* Отступ слева */
+  width: 45%; /* Ширина секции */
+  max-width: 600px; /* Максимальная ширина для больших экранов */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Равномерное распределение элементов */
+  min-height: auto; /* Автоматическая высота */
+  z-index: 10; /* Уровень наложения */
+}
+
+.image-wrapper {
+  position: relative; /* Для правильного позиционирования .text-box */
+  width: 100%;
+  height: 650px; /* Высота изображения */
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+.main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+.text-box {
+  background-color: rgba(51, 102, 204, 0.9); /* Полупрозрачный фон */
+  color: white;
+  padding: 28px;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: left;
+  border-radius: 10px;
+  position: absolute; /* Абсолютное позиционирование */
+  bottom: 20px; /* Расположение от нижнего края */
+  left: 5%; /* Отступ слева */
+  right: 1%; /* Отступ справа */
+  z-index: 2; /* Уровень наложения */
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3); /* Тень */
+}
+
+/* Правая часть */
+.right-section {
+  margin-left: calc(45% + 40px); /* Добавляем отступ для правой секции */
+  padding: 34px; /* Уменьшено на 15% */
+  border-radius: 14px; /* Уменьшено на 15% */
+  box-shadow: none; /* убираем тень */
+  background: none; /* убираем фон */
+  padding-top: 42px; /* Уменьшено на 15% */
+  color: #222; /* Цвет текста */
+  height: auto; /* Автоматическая высота */
+  box-sizing: border-box; /* чтобы padding не выходил за границу блока */
+}
+
+/* Адаптация для мобильных */
+@media (max-width: 768px) {
+  .left-section {
+    width: 90%; /* Увеличиваем ширину на маленьких экранах */
+    left: 5%; /* Центрируем по горизонтали */
+    max-width: none; /* Убираем ограничение по ширине */
+  }
+  .right-section {
+    margin-left: 0; /* Убираем отступ для правой секции */
+    margin-top: 20px; /* Добавляем отступ сверху */
+  }
+  .image-wrapper {
+    height: 450px; /* Уменьшаем высоту изображения */
+  }
+  .text-box {
+    font-size: 20px;
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .left-section {
+    width: 95%; /* Еще больше ширина */
+    left: 2.5%; /* Центрируем по горизонтали */
+  }
+  .image-wrapper {
+    height: 320px; /* Еще меньше высота изображения */
+  }
+  .text-box {
+    font-size: 16px;
+    padding: 12px;
+  }
+}
+
+/* Правая часть */
+.right-section {
+  padding: 34px;
+  border-radius: 14px;
+  box-shadow: none;
+  background: none;
+  color: #222;
+  flex: 0 0 45%; /* Ширина секции */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Равномерное распределение элементов */
+  min-height: 800px; /* Минимальная высота */
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  margin-bottom: 25px;
+}
+
+.icon-top {
+  width: 51px;
+  height: auto;
+}
+
+.header-top h2 {
+  font-size: 24px;
+}
+
+.content-box {
+  flex-grow: 1; /* Занимает доступное пространство */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Равномерное распределение элементов */
+}
+
+/* Стилизация первого параграфа (с классом white-background) */
+p .white-background {
+  background-color: white; /* Белый фон */
+  padding: 20px; /* Внутренние отступы */
+  border-radius: 14px; /* Закругленные углы */
+  display: inline-block; /* Чтобы фон обтекал текст */
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1); /* Легкая тень для объема */
+  text-align: center; /* Выравнивание текста по центру */
+  max-width: 100%; /* Ограничение ширины */
+  box-sizing: border-box; /* Корректное вычисление размеров */
+  font-size: 32px; /* Размер текста */
+  line-height: 1.4; /* Межстрочный интервал */
+}
+
+
+.content-box p {
+  margin: 13px 0;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.highlight {
+  color: #007bff;
+}
+
+.styled-red-text {
+  color: #ff6600;
+  font-size: 20px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.reserve-button {
+  background-color: #28a745;
+  color: white;
+  padding: 17px 34px;
+  border: none;
+  border-radius: 10px;
+  font-size: 19px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
+}
+
+.reserve-button:hover {
+  background-color: #218838;
+}
+
+.action-row {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  margin-top: 25px;
+}
+
+.timer {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 13px;
+  font-size: 14px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.timer-title {
+  font-weight: bold;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.timer-box {
+  font-size: 17px;
+  font-weight: bold;
+  color: #dc3545;
+}
+
+.bonus-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 25px;
+}
+
+.bonus-box {
+  background-color: black;
+  color: white;
+  padding: 13px 21px;
+  border-radius: 22px;
+  font-size: 14px;
+  border: 2px solid #007bff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bonus-link {
+  font-size: 13px;
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.icon-bottom {
+  width: 26px;
+  height: 26px;
+}
+
+.bonus-after-reg {
+  font-size: 15px;
+  font-weight: bold;
+  color: #007bff;
+  text-align: left;
+  margin-top: 8px;
+}
+
+.fine-print {
+  font-size: 11px;
+  margin-top: 13px;
+  text-align: center;
+}
+
+.parent-satisfaction {
+  font-size: 15px;
+  font-weight: bold;
+  color: #28a745;
+  margin-top: 17px;
+  text-align: left;
+}
+
+/* Адаптивные стили */
+@media (min-width: 1440px) {
+  .container {
+    padding: 40px;
+    gap: 40px;
+  }
+  .reserve-button {
+    padding: 20px 40px;
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .container {
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+  }
+  .left-section,
+  .right-section {
+    flex: 1 1 100%; /* Секции занимают всю ширину */
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+    gap: 15px;
+  }
+  .reserve-button {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 10px;
+    gap: 10px;
+  }
+  .reserve-button {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+}
+
+/* Стили для выбора курсов */
+.course-section,
+.free-courses-section {
+  margin-bottom: 20px;
+}
+
+.course-level,
+.free-courses-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.course-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.course-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #555;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: all 0.3s ease;
+}
+
+input[type="checkbox"] {
+  border-radius: 4px;
+}
+
+input[type="radio"]:checked,
+input[type="checkbox"]:checked {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+}
+
+input[type="radio"]:checked::after {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin: 5px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+input[type="checkbox"]:checked::after {
+  content: '✔';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: white;
+}
+
+label {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+label:hover {
+  color: #4CAF50;
+}
+
+.course-section {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.free-courses-section {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
