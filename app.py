@@ -171,7 +171,7 @@ def submit_quiz():
 
 @app.route("/")
 def home():
-    return render_template("smartholydays.html")
+    return render_template("SmartHolydays.html")
 
 @app.route("/ITakademia")
 def itakademia():
@@ -179,7 +179,7 @@ def itakademia():
 
 @app.route("/futurecode")
 def futurecode():
-    return render_template("futurecode.html")
+    return render_template("FutureCode.html")
 
 @app.route("/futurequiz")
 def futurequiz():
